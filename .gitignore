@@ -1,0 +1,15 @@
+.env
+.DS_Store
+
+/bin/
+*.exe
+*.test
+*.out
+coverage.out
+
+.vscode/
+.idea/
+
+Thumbs.db
+
+pgdata/

@@ -1,0 +1,31 @@
+package dto
+
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
+
+type RegisterRequest struct {
+	Name     string `json:"name"     binding:"required,min=2,max=100"`
+	Email    string `json:"email"    binding:"required,email"`
+	Password string `json:"password" binding:"required,min=8"`
+}
+
+type LoginRequest struct {
+	Email    string `json:"email"    binding:"required,email"`
+	Password string `json:"password" binding:"required"`
+}
+
+type AuthResponse struct {
+	Token string       `json:"token"`
+	User  UserResponse `json:"user"`
+}
+
+type UserResponse struct {
+	ID         uuid.UUID `json:"id"`
+	Name       string    `json:"name"`
+	Email      string    `json:"email"`
+	GlobalRole string    `json:"global_role"`
+	CreatedAt  time.Time `json:"created_at"`
+}

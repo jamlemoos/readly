@@ -1,0 +1,1005 @@
+{
+  "info": {
+    "name": "Reader Club API - Atividade 3",
+    "_postman_id": "reader-club-api-atividade3",
+    "description": "Coleção de endpoints da Reader Club API para a Atividade 3 de Desenvolvimento Web II.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api/v1"
+    },
+    {
+      "key": "admin_email",
+      "value": "admin@example.com"
+    },
+    {
+      "key": "admin_password",
+      "value": "adminpassword"
+    },
+    {
+      "key": "member_name",
+      "value": ""
+    },
+    {
+      "key": "member_email",
+      "value": ""
+    },
+    {
+      "key": "member_password",
+      "value": "memberpassword"
+    },
+    {
+      "key": "visitor_email",
+      "value": "visitor@example.com"
+    },
+    {
+      "key": "visitor_password",
+      "value": "visitorpassword"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "member_token",
+      "value": ""
+    },
+    {
+      "key": "visitor_token",
+      "value": ""
+    },
+    {
+      "key": "run_id",
+      "value": ""
+    },
+    {
+      "key": "club_name",
+      "value": ""
+    },
+    {
+      "key": "club_description",
+      "value": "Clube para leitura mensal de ficção, suspense e clássicos."
+    },
+    {
+      "key": "suggestion_title",
+      "value": ""
+    },
+    {
+      "key": "suggestion_author",
+      "value": "Matt Haig"
+    },
+    {
+      "key": "suggestion_description",
+      "value": "Uma sugestão para discutir escolhas, arrependimentos e possibilidades de vida."
+    },
+    {
+      "key": "theme_year",
+      "value": "2026"
+    },
+    {
+      "key": "theme_month",
+      "value": ""
+    },
+    {
+      "key": "club_id",
+      "value": ""
+    },
+    {
+      "key": "suggestion_id",
+      "value": ""
+    },
+    {
+      "key": "theme_id",
+      "value": ""
+    },
+    {
+      "key": "meeting_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Setup",
+      "item": [
+        {
+          "name": "Initialize Test Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const runId = Date.now().toString();",
+                  "",
+                  "pm.collectionVariables.set(\"run_id\", runId);",
+                  "",
+                  "pm.collectionVariables.set(\"admin_token\", \"\");",
+                  "pm.collectionVariables.set(\"member_token\", \"\");",
+                  "pm.collectionVariables.set(\"visitor_token\", \"\");",
+                  "pm.collectionVariables.set(\"club_id\", \"\");",
+                  "pm.collectionVariables.set(\"suggestion_id\", \"\");",
+                  "pm.collectionVariables.set(\"theme_id\", \"\");",
+                  "pm.collectionVariables.set(\"meeting_id\", \"\");",
+                  "",
+                  "pm.collectionVariables.set(\"member_name\", `Regular Member ${runId}`);",
+                  "pm.collectionVariables.set(\"member_email\", `member+${runId}@example.com`);",
+                  "",
+                  "pm.collectionVariables.set(\"club_name\", `Clube Leituras Noturnas ${runId}`);",
+                  "pm.collectionVariables.set(\"club_description\", \"Clube para leitura mensal de ficção, suspense e clássicos.\");",
+                  "",
+                  "pm.collectionVariables.set(\"suggestion_title\", `A Biblioteca da Meia-Noite ${runId}`);",
+                  "pm.collectionVariables.set(\"suggestion_author\", \"Matt Haig\");",
+                  "pm.collectionVariables.set(\"suggestion_description\", \"Uma sugestão para discutir escolhas, arrependimentos e possibilidades de vida.\");",
+                  "",
+                  "pm.collectionVariables.set(\"theme_year\", \"2026\");",
+                  "pm.collectionVariables.set(\"theme_month\", \"6\");",
+                  "",
+                  "pm.test(\"Setup request returns 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/info",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "info"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public",
+      "item": [
+        {
+          "name": "GET Info",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/info",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "info"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Member",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{member_name}}\",\n  \"email\": \"{{member_email}}\",\n  \"password\": \"{{member_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const token =",
+                  "  json.token ||",
+                  "  json.access_token ||",
+                  "  (json.data && (json.data.token || json.data.access_token));",
+                  "",
+                  "pm.test(\"Response contains token\", function () {",
+                  "  pm.expect(token).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"admin_token\", token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{admin_email}}\",\n  \"password\": \"{{admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login Member",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const token =",
+                  "  json.token ||",
+                  "  json.access_token ||",
+                  "  (json.data && (json.data.token || json.data.access_token));",
+                  "",
+                  "pm.test(\"Response contains token\", function () {",
+                  "  pm.expect(token).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"member_token\", token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{member_email}}\",\n  \"password\": \"{{member_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login Visitor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const token =",
+                  "  json.token ||",
+                  "  json.access_token ||",
+                  "  (json.data && (json.data.token || json.data.access_token));",
+                  "",
+                  "pm.test(\"Response contains token\", function () {",
+                  "  pm.expect(token).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"visitor_token\", token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{visitor_email}}\",\n  \"password\": \"{{visitor_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Book Clubs",
+      "item": [
+        {
+          "name": "Create Club as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201 Created\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const id =",
+                  "  json.id ||",
+                  "  (json.data && json.data.id) ||",
+                  "  (json.club && json.club.id) ||",
+                  "  (json.book_club && json.book_club.id);",
+                  "",
+                  "pm.test(\"Response contains club id\", function () {",
+                  "  pm.expect(id).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"club_id\", id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{club_name}}\",\n  \"description\": \"{{club_description}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clubs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Clubs as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clubs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Club by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clubs/{{club_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "{{club_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Memberships",
+      "item": [
+        {
+          "name": "Join Club as Member",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{member_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"ROLE_MEMBER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clubs/{{club_id}}/join",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "{{club_id}}",
+                "join"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Book Suggestions",
+      "item": [
+        {
+          "name": "Suggest Book as Member",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201 Created\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const id =",
+                  "  json.id ||",
+                  "  (json.data && json.data.id) ||",
+                  "  (json.suggestion && json.suggestion.id);",
+                  "",
+                  "pm.test(\"Response contains suggestion id\", function () {",
+                  "  pm.expect(id).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"suggestion_id\", id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{member_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"{{suggestion_title}}\",\n  \"author\": \"{{suggestion_author}}\",\n  \"description\": \"{{suggestion_description}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clubs/{{club_id}}/suggestions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "{{club_id}}",
+                "suggestions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Suggestions as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clubs/{{club_id}}/suggestions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "{{club_id}}",
+                "suggestions"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Monthly Themes",
+      "item": [
+        {
+          "name": "Draw Monthly Theme as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201 Created\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const id =",
+                  "  json.id ||",
+                  "  (json.data && json.data.id) ||",
+                  "  (json.theme && json.theme.id);",
+                  "",
+                  "pm.test(\"Response contains theme id\", function () {",
+                  "  pm.expect(id).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"theme_id\", id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"year\": {{theme_year}},\n  \"month\": {{theme_month}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clubs/{{club_id}}/themes/draw",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "{{club_id}}",
+                "themes",
+                "draw"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Meetings",
+      "item": [
+        {
+          "name": "Create Meeting as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 201 Created\", function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "const json = pm.response.json();",
+                  "",
+                  "const id =",
+                  "  json.id ||",
+                  "  (json.data && json.data.id) ||",
+                  "  (json.meeting && json.meeting.id);",
+                  "",
+                  "pm.test(\"Response contains meeting id\", function () {",
+                  "  pm.expect(id).to.be.a(\"string\").and.not.empty;",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"meeting_id\", id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theme_id\": \"{{theme_id}}\",\n  \"scheduled_at\": \"2026-06-15T19:30:00Z\",\n  \"location\": \"Café Central\",\n  \"notes\": \"Encontro mensal para discutir o tema sorteado.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clubs/{{club_id}}/meetings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "{{club_id}}",
+                "meetings"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authorization Checks",
+      "item": [
+        {
+          "name": "Create Club as Member Should Return Forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 403\", function () {",
+                  "  pm.response.to.have.status(403);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{member_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Clube Indevido\",\n  \"description\": \"Este request deve falhar para validar 403.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/clubs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Unauthenticated List Clubs Should Return Unauthorized",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 401\", function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/clubs",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Unknown Club Should Return Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 404\", function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clubs/00000000-0000-0000-0000-000000000000",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "00000000-0000-0000-0000-000000000000"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Book Clubs / Delete Club as Admin (Run Last)",
+      "item": [
+        {
+          "name": "Delete Club as Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 204 No Content\", function () {",
+                  "  pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "pm.collectionVariables.set(\"club_id\", \"\");",
+                  "pm.collectionVariables.set(\"suggestion_id\", \"\");",
+                  "pm.collectionVariables.set(\"theme_id\", \"\");",
+                  "pm.collectionVariables.set(\"meeting_id\", \"\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clubs/{{club_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clubs",
+                "{{club_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
